@@ -3,22 +3,89 @@
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    width: 50vw;
-    height: 50vh;
-    border-radius: 20px;
-    box-shadow: 0 0 15px 5px grey;
-    background: white;
-    position: relative
+    width: 100%;
+    height: 100%;
+    background-image: url('https://therealbarman.com/wp-content/uploads/2018/08/Bar-Background.png');
+    /* border-radius: 20px; */
+    /* box-shadow: 0 0 15px 5px grey; */
+    /* background: white; */
+    /* position: relative */
 }
 
 .homepage > .button {
+    text-align: center;
     background: #1877f2;
     border: 1px solid #1877f2;
+    border-radius: 8px;
     color: #fff;
     font-size: 1.25rem;
     padding: 0.5rem;
     margin: 0.5rem 0;
-    border-radius: 8px;
+    width: 550px;
     outline: none;
     cursor: pointer;
+}
+
+.homepage > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    text-align: center;
+    background: black;
+    border: 3px solid white;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Chelsea Market', cursive;
+    font-size: 1.25rem;
+    margin: 30px;
+    width: 600px;
+    height: 450px;
+}
+
+.homepage > .container > h1 {
+    margin: 30px;
+}
+
+.homepage > .container > ul {
+    margin: 25px;
+}
+
+.homepage > .container > .menu {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0px;
+}
+
+.homepage > .container > .menu > .option {
+    border: 3px solid white;
+    border-radius: 25%;
+    margin: 15px;
+    padding: 10px;
+    width: 65px;
+    height: 65px;
+}
+
+.homepage > .container > .menu > #red {
+    background-color: red;
+}
+
+.homepage > .container > .menu > #yellow {
+    background-color: yellow;
+}
+
+.homepage > .container > .menu > #blue {
+    background-color: blue;
+}
+
+.homepage > .container > .menu > #orange {
+    background-color: orange;
+}
+
+.homepage > .container > .menu > #green {
+    background-color: green;
+}
+
+.homepage > .container > .menu > #purple {
+    background-color: purple;
 }
