@@ -54,6 +54,8 @@
 .homepage > .container > .menu {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     margin: 5px 0px;
 }
 
@@ -61,7 +63,7 @@
     border: 3px solid white;
     border-radius: 25%;
     margin: 15px;
-    padding: 10px;
+    padding: 15px;
     width: 65px;
     height: 65px;
 }
@@ -72,20 +74,9 @@
 
 .homepage > .container > .menu > #yellow {
     background-color: yellow;
+    color: black;
 }
 
 .homepage > .container > .menu > #blue {
     background-color: blue;
-}
-
-.homepage > .container > .menu > #orange {
-    background-color: orange;
-}
-
-.homepage > .container > .menu > #green {
-    background-color: green;
-}
-
-.homepage > .container > .menu > #purple {
-    background-color: purple;
 }
