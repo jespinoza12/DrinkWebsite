@@ -8,9 +8,9 @@ const Homepage = ({setLoginUser}) => {
                 <h1>Welcome Customer</h1>
                 <h3>What would you like to do?</h3>
                 <div className="menu">
-                    <div id="red" className="option">View Drinks</div>
-                    <div id="yellow" className="option">Add Drinks</div>
-                    <div id="blue" className="option">Delete Drinks</div>
+                    <a id="red" className="option" href="/view">View Drinks</a>
+                    <a id="yellow" className="option" href="/add">Add Drinks</a>
+                    <a id="blue" className="option" href="/delete">Delete Drinks</a>
                 </div>
             </div>
             <div className="button" onClick={() => setLoginUser({})} >Logout</div>

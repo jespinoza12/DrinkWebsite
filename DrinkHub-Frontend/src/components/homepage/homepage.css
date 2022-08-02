@@ -62,21 +62,26 @@
 .homepage > .container > .menu > .option {
     border: 3px solid white;
     border-radius: 25%;
-    margin: 15px;
-    padding: 15px;
+    margin: 30px 20px;
+    padding: 20px;
     width: 65px;
     height: 65px;
 }
 
 .homepage > .container > .menu > #red {
     background-color: red;
+    text-decoration: none;
+    color: white;
 }
 
 .homepage > .container > .menu > #yellow {
     background-color: yellow;
+    text-decoration: none;
     color: black;
 }
 
 .homepage > .container > .menu > #blue {
     background-color: blue;
+    text-decoration: none;
+    color: white;
 }
