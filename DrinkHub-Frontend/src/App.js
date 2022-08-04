@@ -11,6 +11,12 @@ import { useState } from 'react';
 function App() {
 
   const [ user, setLoginUser] = useState({})
+  
+  localStorage.setItem('username', user.username);
+  localStorage.setItem('user', user._id);
+  localStorage.setItem('userAge', user.age);
+
+  
   return (
     <div className="App">
       <Router>

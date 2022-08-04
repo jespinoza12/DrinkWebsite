@@ -20,10 +20,55 @@ const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     age: String, 
+    favorites: [],
+})
 
+const drinkSchema = new mongoose.Schema({
+    name: String, 
+    ingredients: String,
+    containsAlc: Boolean,
+    authorId:String, 
+    authorUsername:String,
 })
 
 const User = new mongoose.model("User", userSchema)
+const Drink = new mongoose.model("Drink", drinkSchema)
+
+
+app.post("/addFavorite", (req, res)=>{
+    const {sdrink, userId} = req.body
+    User.findByIdAndUpdate({_id:userId}, {$push: {favorites: sdrink}}, (err, user) => {
+        if (err){
+            res.send("Oops somthing happened")
+        }else {
+            res.send("Successfully favorited")
+        }
+    })
+})
+
+app.post("/createDrink"), (req, res)=>{
+    const {name, ingredients, containsAlc, authorId, authorUsername} = req.body
+    Drink.findOne({name:name, authorId:authorId}, (err, drink) => {
+        if (drink){
+            "Oops you already have a drink named this try again"
+        }else{
+            const drink = new Drink({
+                name,
+                ingredients,
+                containsAlc,
+                authorId,
+                authorUsername
+            })
+            drink.save(err => {
+                if(err) {
+                    res.send(err)
+                } else {
+                    res.send( { message: "Drink Has been added to MongoDb" })
+                }
+            })
+        }
+    })
+}
 
 //Routes
 app.post("/login", (req, res)=> {
@@ -65,6 +110,8 @@ app.post("/register", (req, res)=> {
     })
     
 }) 
+
+
 
 app.listen(9002,() => {
     console.log("BE started at port 9002")
