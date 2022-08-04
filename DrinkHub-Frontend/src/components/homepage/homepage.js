@@ -14,7 +14,7 @@ const Homepage = ({setLoginUser}) => {
     return (
         <div className="homepage">
             <div className="container">
-                <h1>Welcome Customer</h1>
+                <h1>Welcome {localStorage.getItem('name')}</h1>
                 <h3>What would you like to do?</h3>
                 <div className="menu">
                     <a id="red" className="option" href="/view">View Drinks</a>

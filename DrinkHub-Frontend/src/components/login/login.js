@@ -26,9 +26,16 @@ const Login = ({ setLoginUser}) => {
             alert(res.data.message)
             setLoginUser(res.data.user)
             history.push("/")
-            localStorage.setItem('username', res.data.user.username);
-            localStorage.setItem('user', res.data.user._id);
-            localStorage.setItem('userAge', res.data.user.age);
+            if (res.data.message === "Login Successfull") {
+                localStorage.setItem('username', res.data.user.username);
+                localStorage.setItem('user', res.data.user._id);
+                localStorage.setItem('userAge', res.data.user.age);
+                localStorage.setItem('name', res.data.user.name)
+                history.push("/")
+            }else {
+                console.log(res.data.message)
+                history.push("/")
+            }
         })
     }
 

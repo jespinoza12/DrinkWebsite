@@ -27,13 +27,13 @@ const drinkSchema = new mongoose.Schema({
     name: String, 
     ingredients: String,
     containsAlc: Boolean,
+    steps: String,
     authorId:String, 
     authorUsername:String,
 })
 
 const User = new mongoose.model("User", userSchema)
 const Drink = new mongoose.model("Drink", drinkSchema)
-
 
 app.post("/addFavorite", (req, res)=>{
     const {sdrink, userId} = req.body
@@ -45,7 +45,26 @@ app.post("/addFavorite", (req, res)=>{
         }
     })
 })
-
+app.get('/allDrinks', (req, res) => {
+    Drink.find({})
+    .then((data) => {
+        console.log('All Drinks: ', data);
+        res.json(data);
+    })
+    .catch((error) => {
+        console.log('error: ', error);
+    });
+})
+app.get('/allUsers', (req, res) => {
+    Drink.find({})
+    .then((data) => {
+        console.log('All Users: ', data);
+        res.json(data);
+    })
+    .catch((error) => {
+        console.log('error: ', error);
+    });
+})
 app.post("/createDrink"), (req, res)=>{
     const {name, ingredients, containsAlc, authorId, authorUsername} = req.body
     Drink.findOne({name:name, authorId:authorId}, (err, drink) => {
@@ -56,6 +75,7 @@ app.post("/createDrink"), (req, res)=>{
                 name,
                 ingredients,
                 containsAlc,
+                steps,
                 authorId,
                 authorUsername
             })
@@ -69,7 +89,6 @@ app.post("/createDrink"), (req, res)=>{
         }
     })
 }
-
 app.post("/deleteDrink"), (req, res)=>{
     const {drinkId} = req.body
     Drink.findOneByIdAndDelete({_id:drinkId}, (err) => {
@@ -80,7 +99,6 @@ app.post("/deleteDrink"), (req, res)=>{
         }
     })
 }
-
 //Routes
 app.post("/login", (req, res)=> {
     const { email, password} = req.body
@@ -96,7 +114,6 @@ app.post("/login", (req, res)=> {
         }
     })
 }) 
-
 app.post("/register", (req, res)=> {
     const { name, email, password, age, username} = req.body
     User.findOne({email: email}, (err, user) => {
@@ -121,9 +138,6 @@ app.post("/register", (req, res)=> {
     })
     
 }) 
-
-
-
 app.listen(9002,() => {
     console.log("BE started at port 9002")
 })

@@ -14,7 +14,8 @@ function App() {
   const [drinks, setDrinks] = useState([])
   const [filteredDrinks, setFilteredDrinks] = useState([])
   const [check, setCheck] = useState(false)
-
+  const [searchTerm, setSearchTerm] = useState("")
+  
   useEffect(() => {
     setLoginUser({
       _id: localStorage.getItem('user')
@@ -22,31 +23,27 @@ function App() {
     if (localStorage.getItem('userAge') === "20"){
       getAllDrinks()
       getAllCreatedDrinks()
-      getFilteredCards()
     }else {
       getNonAlcDrinks()
       getAllCreatedDrinks()
-      getFilteredCards()
     }
   }, []);
 
+  useEffect(() => {
+    getSearchedDrinks(searchTerm)
+    getFilteredCards()
+  }, [searchTerm]);
+
   const getAllDrinks = () => {
-    var url = "";
-    fetch(url)
-      .then(r => r.json(0))
-      .then(data => {
-        setDrinks()
-        
-      }).catch(e => console.log(e));
+    var url = "www.thecocktaildb.com/api/json/v1/1/search.php?s=";
   }
 
   const getNonAlcDrinks = () => {
-    var url = "";
-    fetch(url)
-      .then(r => r.json(0))
-      .then(data => {
-        setDrinks(data.results);        
-      }).catch(e => console.log(e));
+    var url = "www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic";
+  }
+
+  const getSearchedDrinks = (query) => {
+    var url = `www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`;
   }
 
   const getAllCreatedDrinks = () => {
@@ -56,14 +53,19 @@ function App() {
   const getFilteredCards = () => {
       
   }
-  
+  const getDrinkForDelete = () => {
+      
+  }
+
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route exact path="/">
             {
-              user && user._id ? <Homepage setLoginUser={setLoginUser} /> : <Login setLoginUser={setLoginUser}/>
+              user && user._id ?
+                <Homepage setLoginUser={setLoginUser}/>
+                : <Login setLoginUser={setLoginUser}/>
             }
           </Route>
           <Route path="/login">
@@ -74,7 +76,7 @@ function App() {
           </Route>
           <Route path="/view">
             {
-              user && user._id ?  <View /> : <Login setLoginUser={setLoginUser}/>
+              user && user._id && check === false ?  <View drinks = {drinks}/>: <Login setLoginUser={setLoginUser}/>
             }
           </Route>
           <Route path="/add">
@@ -84,7 +86,7 @@ function App() {
           </Route>
           <Route path="/delete">
             {
-              user && user._id ? <Delete /> : <Login setLoginUser={setLoginUser}/>
+              user && user._id ? <Delete rawr = {getDrinkForDelete} /> : <Login setLoginUser={setLoginUser}/>
             }
           </Route>
         </Switch>
