@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     username: String,
     password: String,
-    age: String, 
+    age: Number, 
     favorites: [],
 })
 
@@ -66,6 +66,17 @@ app.post("/createDrink"), (req, res)=>{
                     res.send( { message: "Drink Has been added to MongoDb" })
                 }
             })
+        }
+    })
+}
+
+app.post("/deleteDrink"), (req, res)=>{
+    const {drinkId} = req.body
+    Drink.findOneByIdAndDelete({_id:drinkId}, (err) => {
+        if (err){
+            console.log("Oops")
+        }else{
+            console.log("Drink Deleted")
         }
     })
 }

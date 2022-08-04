@@ -1,7 +1,16 @@
 import React from "react"
 import "./homepage.css"
 
+
+
 const Homepage = ({setLoginUser}) => {
+    
+    const handleClick = (e) => {
+        e.preventDefault()
+        setLoginUser({})
+        localStorage.clear()
+
+    }
     return (
         <div className="homepage">
             <div className="container">
@@ -13,7 +22,7 @@ const Homepage = ({setLoginUser}) => {
                     <a id="blue" className="option" href="/delete">Delete Drinks</a>
                 </div>
             </div>
-            <div className="button" onClick={() => setLoginUser({})} >Logout</div>
+            <div className="button" onClick={handleClick} >Logout</div>
         </div>
     )
 }

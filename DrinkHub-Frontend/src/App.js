@@ -6,16 +6,56 @@ import View from "./components/view_drinks/view"
 import Add from "./components/add_drinks/add"
 import Delete from "./components/delete_drinks/delete"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
   const [ user, setLoginUser] = useState({})
-  
-  localStorage.setItem('username', user.username);
-  localStorage.setItem('user', user._id);
-  localStorage.setItem('userAge', user.age);
+  const [drinks, setDrinks] = useState([])
+  const [filteredDrinks, setFilteredDrinks] = useState([])
+  const [check, setCheck] = useState(false)
 
+  useEffect(() => {
+    setLoginUser({
+      _id: localStorage.getItem('user')
+    })
+    if (localStorage.getItem('userAge') === "20"){
+      getAllDrinks()
+      getAllCreatedDrinks()
+      getFilteredCards()
+    }else {
+      getNonAlcDrinks()
+      getAllCreatedDrinks()
+      getFilteredCards()
+    }
+  }, []);
+
+  const getAllDrinks = () => {
+    var url = "";
+    fetch(url)
+      .then(r => r.json(0))
+      .then(data => {
+        setDrinks()
+        
+      }).catch(e => console.log(e));
+  }
+
+  const getNonAlcDrinks = () => {
+    var url = "";
+    fetch(url)
+      .then(r => r.json(0))
+      .then(data => {
+        setDrinks(data.results);        
+      }).catch(e => console.log(e));
+  }
+
+  const getAllCreatedDrinks = () => {
+
+  }
+
+  const getFilteredCards = () => {
+      
+  }
   
   return (
     <div className="App">
@@ -33,13 +73,19 @@ function App() {
             <Register />
           </Route>
           <Route path="/view">
-            <View />
+            {
+              user && user._id ?  <View /> : <Login setLoginUser={setLoginUser}/>
+            }
           </Route>
           <Route path="/add">
-            <Add />
+            {
+              user && user._id ? <Add /> : <Login setLoginUser={setLoginUser}/>
+            }
           </Route>
           <Route path="/delete">
-            <Delete />
+            {
+              user && user._id ? <Delete /> : <Login setLoginUser={setLoginUser}/>
+            }
           </Route>
         </Switch>
       </Router>
