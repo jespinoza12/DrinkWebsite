@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://jimssportsbar.com/cms/wp-content/uploads/2018/01/JSC_122934990.jpg");
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: burlywood;
 }
 
 .view > .button {
@@ -24,9 +24,9 @@
 
 .view > .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
+    margin: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
     text-align: center;
     background: black;
     border: 3px solid white;
@@ -35,6 +35,13 @@
     font-family: 'Chelsea Market', cursive;
     font-size: 1.25rem;
     margin: 30px;
-    width: 600px;
-    height: 450px;
 }
+
+.imgSmall {
+    width: 200px;
+}
+
+.width{
+    width: 100px;
+}
+

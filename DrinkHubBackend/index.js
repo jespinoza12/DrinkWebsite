@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(cors())
 
+mongoose.set('useFindAndModify', false);
 mongoose.connect("mongodb+srv://FrostyFeet:1234@cluster.tbjhmul.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -19,106 +20,103 @@ const userSchema = new mongoose.Schema({
     email: String,
     username: String,
     password: String,
-    age: Number, 
+    age: Number,
     favorites: [],
 })
 
 const drinkSchema = new mongoose.Schema({
-    name: String, 
+    name: String,
     ingredients: String,
-    containsAlc: Boolean,
     steps: String,
-    authorId:String, 
-    authorUsername:String,
+    containsAlc: Boolean,
+    authorId: String,
+    username: String,
 })
 
 const User = new mongoose.model("User", userSchema)
-const Drink = new mongoose.model("Drink", drinkSchema)
+const Drinks = new mongoose.model("Drink", drinkSchema)
 
-app.post("/addFavorite", (req, res)=>{
-    const {sdrink, userId} = req.body
-    User.findByIdAndUpdate({_id:userId}, {$push: {favorites: sdrink}}, (err, user) => {
-        if (err){
+app.post("/addFavorite", (req, res) => {
+    const { sdrink, userId } = req.body
+    User.findByIdAndUpdate({ _id: userId }, { $push: { favorites: sdrink } }, (err, user) => {
+        if (err) {
             res.send("Oops somthing happened")
-        }else {
+        } else {
             res.send("Successfully favorited")
         }
     })
 })
 app.get('/allDrinks', (req, res) => {
-    Drink.find({})
-    .then((data) => {
-        console.log('All Drinks: ', data);
-        res.json(data);
-    })
-    .catch((error) => {
-        console.log('error: ', error);
-    });
+    Drinks.find({})
+        .then((data) => {
+            console.log('All Drinks: ', data);
+            res.json(data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
 })
 app.get('/allUsers', (req, res) => {
-    Drink.find({})
-    .then((data) => {
-        console.log('All Users: ', data);
-        res.json(data);
-    })
-    .catch((error) => {
-        console.log('error: ', error);
-    });
+    Drinks.find({})
+        .then((data) => {
+            console.log('All Users: ', data);
+            res.json(data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
 })
-app.post("/createDrink"), (req, res)=>{
-    const {name, ingredients, containsAlc, authorId, authorUsername} = req.body
-    Drink.findOne({name:name, authorId:authorId}, (err, drink) => {
+
+app.post("/createDrinks", (req, res) => {
+    const { name, ingredients, authorId, username, steps, containsAlc } = req.body
+    const drink = new Drinks({
+        name,
+        ingredients,
+        containsAlc,
+        steps,
+        authorId,
+        username
+    })
+    drink.save(err => {
+        if (err) {
+            res.send(err)
+        } else {
+            res.send({ message: "Drink Has been added to MongoDb" })
+        }
+    })
+})
+app.post("/deleteDrink", (req, res) => {
+    const { drinkId } = req.body
+    Drinks.findOne({ _id: drinkId }, (err, drink) => {
         if (drink){
-            "Oops you already have a drink named this try again"
-        }else{
-            const drink = new Drink({
-                name,
-                ingredients,
-                containsAlc,
-                steps,
-                authorId,
-                authorUsername
-            })
-            drink.save(err => {
-                if(err) {
-                    res.send(err)
-                } else {
-                    res.send( { message: "Drink Has been added to MongoDb" })
-                }
-            })
+            drink.delete()
+            console.log("Deleted")
+            res.send({message: "Deleted"})
+        }else {
+            console.log("Oops" + err)
         }
     })
-}
-app.post("/deleteDrink"), (req, res)=>{
-    const {drinkId} = req.body
-    Drink.findOneByIdAndDelete({_id:drinkId}, (err) => {
-        if (err){
-            console.log("Oops")
-        }else{
-            console.log("Drink Deleted")
-        }
-    })
-}
+})
 //Routes
-app.post("/login", (req, res)=> {
-    const { email, password} = req.body
-    User.findOne({ email: email}, (err, user) => {
-        if(user){
-            if(password === user.password ) {
-                res.send({message: "Login Successfull", user: user})
+app.post("/login", (req, res) => {
+    const { email, password } = req.body
+    User.findOne({ email: email }, (err, user) => {
+        if (user) {
+            if (password === user.password) {
+                res.send({ message: "Login Successfull", user: user })
             } else {
-                res.send({ message: "Password didn't match"})
+                res.send({ message: "Password didn't match" })
             }
         } else {
-            res.send({message: "User not registered"})
+            res.send({ message: "User not registered" })
         }
     })
-}) 
-app.post("/register", (req, res)=> {
-    const { name, email, password, age, username} = req.body
-    User.findOne({email: email}, (err, user) => {
-        if(user){
-            res.send({message: "User already registerd"})
+})
+app.post("/register", (req, res) => {
+    const { name, email, password, age, username } = req.body
+    User.findOne({ email: email }, (err, user) => {
+        if (user) {
+            res.send({ message: "User already registerd" })
         } else {
             const user = new User({
                 name,
@@ -128,16 +126,17 @@ app.post("/register", (req, res)=> {
                 password
             })
             user.save(err => {
-                if(err) {
+                if (err) {
                     res.send(err)
                 } else {
-                    res.send( { message: "Successfully Registered, Please login now." })
+                    res.send({ message: "Successfully Registered, Please login now." })
                 }
             })
         }
     })
-    
-}) 
-app.listen(9002,() => {
-    console.log("BE started at port 9002")
+
+})
+
+app.listen(3002, () => {
+    console.log("BE started at port 3002")
 })
