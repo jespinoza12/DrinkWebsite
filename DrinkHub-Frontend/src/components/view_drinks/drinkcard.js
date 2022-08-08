@@ -23,12 +23,14 @@ const DrinkCard = ({drink, created, deleted}) => {
 return (
           <div className=''>
             <img src={drink.strDrinkThumb} className="imgSmall"></img>
-            <p>Name: {drink.name || drink.strDrink}</p>
-            --------
-            <p>{drink.ingredients || drink.strIngredient1}</p>
-            <p><p>{drink.strIngredient2 || ""}</p><p>{drink.strIngredient3 || ""}</p></p>  
+            <p className='fontSize'>Name: {drink.name || drink.strDrink}</p>
+            <p>-------------------</p>            
+            <p className='fontSize'>ingredients:</p>
+            <p className='fontSize'>{drink.ingredients || drink.strIngredient1}</p>
+            <p><p className='fontSize'>{drink.strIngredient2 || ""}</p><p className='fontSize'>{drink.strIngredient3 || ""}</p><p className='fontSize'>{drink.strIngredient4 || ""}</p><p className='fontSize'>{drink.strIngredient5 || ""}</p>
+            <p className='fontSize'>{drink.strIngredient6 || ""}</p><p className='fontSize'>{drink.strIngredient7 || ""}</p> <p className='fontSize'>{drink.strIngredient8 || ""}</p></p>  
             {
-              created?  <p>Created By: {drink.username}</p> : <p></p>
+              created?  <p className='fontSize'>Created By: {drink.username}</p> : <p></p>
             }
             {
               deleted ? <button className='button' onClick={onClick2}>Delete</button> : <div></div>

@@ -4,11 +4,12 @@
     align-items: center;
     justify-content: center;
     width: 100vw;
-    height: 100vh;
+    height: 200vh;
     background-color: burlywood;
 }
 
 .view > .button {
+    margin: auto;
     text-align: center;
     background: #1877f2;
     border: 1px solid #1877f2;
@@ -24,6 +25,7 @@
 
 .view > .container {
     display: flex;
+    font-size: 1px;
     margin: 20px;
     flex-direction: row;
     flex-wrap: wrap;
@@ -34,14 +36,22 @@
     color: white;
     font-family: 'Chelsea Market', cursive;
     font-size: 1.25rem;
-    margin: 30px;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 300px;
+    justify-items: center;
+
 }
 
 .imgSmall {
-    width: 200px;
+    width: 75px;
 }
 
-.width{
-    width: 100px;
+.fontSize{
+    font-size: small;
+}
+
+.m-1{
+    margin: 30px;
 }
 

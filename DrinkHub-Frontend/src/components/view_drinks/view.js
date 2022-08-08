@@ -5,7 +5,7 @@ import DrinkList from "./drinkList";
 const View = ({drinks, deleted, created}) => {
     return (
 
-        <div className="view">
+        <div className="view fontSize">
             {
                 deleted ? <h1>Delete Drinks</h1> : <h1>View Drinks</h1>
             }
